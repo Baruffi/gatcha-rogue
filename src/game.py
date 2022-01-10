@@ -2,8 +2,9 @@ import os
 
 import pygame as pg
 
-from classes.Drawable import Drawable
-from classes.Game import Game
+from classes.base.Drawable import Drawable
+from classes.base.Updatable import Updatable
+from classes.components.Quit import Quit
 
 main_dir = os.path.split(os.path.abspath(__file__))[0]
 
@@ -15,38 +16,35 @@ def setup():
 
     font = pg.font.Font(os.path.join(
         main_dir, 'graphics/fonts/kongtext/kongtext.ttf'), 24)
-    game = Game(drawables=[Drawable(font.render(
-        'SAMPLE TEXT', False, (255, 255, 255), (0, 0, 0)), (0, 0))])
+    quit = Quit(font)
 
-    return screen, game
+    return screen, quit
 
 
-def update(game: Game):
-    for e in pg.event.get():
+def update(*updatables: Updatable):
+    for e in pg.event.get(pg.QUIT):
         if e.type == pg.QUIT:
             pg.quit()
 
-        if e.type == pg.KEYDOWN and e.key == pg.K_ESCAPE:
-            # TODO: confirm escape
-            pg.quit()
-
-        game.update(e)
+    for updatable in updatables:
+        updatable.update()
 
 
-def draw(screen: pg.Surface, game: Game):
+def draw(screen: pg.Surface, *drawables: Drawable):
     screen.fill((0, 0, 0))
 
-    game.draw(screen)
+    for drawable in drawables:
+        drawable.draw(screen)
 
     pg.display.update()
 
 
 def main():
-    screen, game = setup()
+    screen, quit = setup()
 
     while True:
-        update(game)
-        draw(screen, game)
+        update(quit)
+        draw(screen, quit)
 
 
 if __name__ == "__main__":
