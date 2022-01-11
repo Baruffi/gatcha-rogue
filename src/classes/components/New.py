@@ -3,10 +3,10 @@ from classes.base.Coordinate import Coordinate
 from classes.components.Button import Button
 
 
-class Quit(Button):
+class New(Button):
 
     def __init__(self, font: pg.font.Font, coordinate: Coordinate):
-        super().__init__(font, 'Quit', coordinate, (255, 0, 0))
+        super().__init__(font, 'New Game', coordinate, (0, 255, 0))
 
     def click(self):
-        pg.quit()
+        print('New game!')

@@ -9,6 +9,6 @@ class Updatable():
     def action(self, e: pg.event.Event):
         pass
 
-    def update(self):
-        for e in pg.event.get(self.event_types):
+    def update(self, e: pg.event.Event):
+        if e.type in self.event_types:
             self.action(e)

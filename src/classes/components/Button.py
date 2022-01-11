@@ -1,23 +1,26 @@
 import pygame as pg
-from classes.base.GameObject import GameObject
+from classes.base.Coordinate import Coordinate
+from classes.base.Drawable import CONTOUR
+from classes.base.Hoverable import Hoverable
 
 
-class Button(GameObject):
+class Button(Hoverable):
 
-    def __init__(self, font: pg.font.Font, button_label: str, button_pos: tuple[int, int]):
+    def __init__(self, font: pg.font.Font, button_label: str, coordinate: Coordinate, accent_color: tuple[int, int, int] = (0, 255, 0)):
         surface = font.render(button_label, False, (255, 255, 255), (0, 0, 0))
-        super().__init__(surface, button_pos, pg.MOUSEBUTTONDOWN)
+        surface.set_colorkey((0, 0, 0))
+
+        super().__init__(surface, coordinate.centerOn(
+            surface), accent_color, pg.MOUSEBUTTONDOWN)
 
     def click(self):
         pass
 
     def action(self, e: pg.event.Event):
-        if e.type == pg.MOUSEBUTTONDOWN and e.button == 1:
-            mouse_x, mouse_y = pg.mouse.get_pos()
-
-            if self.rect.collidepoint(mouse_x, mouse_y):
-                self.click()
+        if e.type == pg.MOUSEBUTTONDOWN and e.button == 1 and self.hovered:
+            self.click()
 
     def draw(self, screen: pg.Surface):
-        pg.draw.rect(screen, (255, 255, 255), self.fat_rect, 10)
+        pg.draw.rect(screen, self.surface.get_palette()
+                     [1], self.fat_rect, CONTOUR)
         super().draw(screen)
