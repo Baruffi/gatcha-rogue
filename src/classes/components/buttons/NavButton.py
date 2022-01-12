@@ -1,6 +1,6 @@
 import pygame as pg
 from classes.base.Coordinate import Coordinate
-from classes.components.Button import Button
+from classes.components.buttons.Button import Button
 from classes.directors.ScreenDirector import ScreenDirector
 
 
