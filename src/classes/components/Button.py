@@ -1,7 +1,7 @@
 import pygame as pg
 from classes.base.Coordinate import Coordinate
 from classes.base.Drawable import CONTOUR
-from classes.base.Hoverable import Hoverable
+from classes.components.Hoverable import Hoverable
 
 
 class Button(Hoverable):

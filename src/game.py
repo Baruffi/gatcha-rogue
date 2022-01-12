@@ -4,9 +4,10 @@ import pygame as pg
 
 from classes.base.Coordinate import Coordinate, CoordinateSystem
 from classes.base.Director import Director
-from classes.components.Menu import Menu
-from classes.components.New import New
-from classes.components.Quit import Quit
+from classes.components.NavButton import NavButton
+from classes.components.QuitButton import QuitButton
+from classes.components.Screen import Screen
+from classes.directors.ScreenDirector import ScreenDirector
 
 main_dir = os.path.split(os.path.abspath(__file__))[0]
 
@@ -20,20 +21,13 @@ def setup():
 
     font = pg.font.Font(os.path.join(
         main_dir, 'graphics/fonts/kongtext/kongtext.ttf'), 24)
-    new = New(font, Coordinate(50, 45))
-    quit = Quit(font, Coordinate(50, 55))
+    new = NavButton(font, 'New Game', Coordinate(50, 45),
+                    pg.event.Event(ScreenDirector.screen_event, active='new'))
+    quit = QuitButton(font, Coordinate(50, 55))
+    mainScreen = Screen('main', (new, quit), True)
+    newScreen = Screen('new', (quit,))
 
-    Director.screen = screen
-    directors = Menu(
-        'main',
-        active=True,
-        updatables=[new, quit],
-        drawables=[new, quit]
-    ), Menu(
-        'new',
-        updatables=[quit],
-        drawables=[quit]
-    ),
+    directors = ScreenDirector([mainScreen, newScreen]),
 
     return directors
 
