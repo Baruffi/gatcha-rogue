@@ -1,6 +1,7 @@
 import pygame as pg
 from classes.base.Coordinate import Coordinate
 from classes.components.Button import Button
+from classes.components.Menu import Menu
 
 
 class New(Button):
@@ -9,4 +10,4 @@ class New(Button):
         super().__init__(font, 'New Game', coordinate, (0, 255, 0))
 
     def click(self):
-        print('New game!')
+        pg.event.post(pg.event.Event(Menu.menu_event, active='new'))

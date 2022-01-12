@@ -4,6 +4,7 @@ import pygame as pg
 
 from classes.base.Coordinate import Coordinate, CoordinateSystem
 from classes.base.Director import Director
+from classes.components.Menu import Menu
 from classes.components.New import New
 from classes.components.Quit import Quit
 
@@ -23,13 +24,22 @@ def setup():
     quit = Quit(font, Coordinate(50, 55))
 
     Director.screen = screen
-    directors = Director(updatables=[new, quit], drawables=[new, quit]),
+    directors = Menu(
+        'main',
+        active=True,
+        updatables=[new, quit],
+        drawables=[new, quit]
+    ), Menu(
+        'new',
+        updatables=[quit],
+        drawables=[quit]
+    ),
 
     return directors
 
 
 def update(directors: tuple[Director]):
-    if pg.event.get(pg.QUIT):
+    if pg.event.peek(pg.QUIT):
         return False
 
     for director in directors:
