@@ -3,8 +3,7 @@ import os
 import pygame as pg
 
 from classes.base.Coordinate import Coordinate, CoordinateSystem
-from classes.base.Drawable import Drawable
-from classes.base.Updatable import Updatable
+from classes.base.Director import Director
 from classes.components.New import New
 from classes.components.Quit import Quit
 
@@ -23,33 +22,34 @@ def setup():
     new = New(font, Coordinate(50, 45))
     quit = Quit(font, Coordinate(50, 55))
 
-    return screen, new, quit
+    Director.screen = screen
+    directors = Director(updatables=[new, quit], drawables=[new, quit]),
+
+    return directors
 
 
-def update(*updatables: Updatable):
-    for e in pg.event.get():
-        if e.type == pg.QUIT:
-            pg.quit()
+def update(directors: tuple[Director]):
+    if pg.event.get(pg.QUIT):
+        return False
 
-        for updatable in updatables:
-            updatable.update(e)
+    for director in directors:
+        director.update()
+
+    return True
 
 
-def draw(screen: pg.Surface, *drawables: Drawable):
-    screen.fill((0, 0, 0))
-
-    for drawable in drawables:
-        drawable.draw(screen)
+def draw(directors: tuple[Director]):
+    for director in directors:
+        director.draw()
 
     pg.display.update()
 
 
 def main():
-    screen, new, quit = setup()
+    directors = setup()
 
-    while True:
-        update(new, quit)
-        draw(screen, new, quit)
+    while update(directors):
+        draw(directors)
 
 
 if __name__ == "__main__":

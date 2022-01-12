@@ -9,4 +9,4 @@ class Quit(Button):
         super().__init__(font, 'Quit', coordinate, (255, 0, 0))
 
     def click(self):
-        pg.quit()
+        pg.event.post(pg.event.Event(pg.QUIT))
