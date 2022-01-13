@@ -16,8 +16,8 @@ class Button(Hoverable):
     def click(self):
         pass
 
-    def action(self, e: pg.event.Event):
-        if e.type == pg.MOUSEBUTTONDOWN and e.button == 1 and self.hovered:
+    def action(self, event: pg.event.Event):
+        if event.type == pg.MOUSEBUTTONDOWN and event.button == 1 and self.hovered:
             self.click()
 
     def draw(self, screen: pg.Surface):

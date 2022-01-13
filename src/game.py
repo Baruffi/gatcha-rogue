@@ -20,13 +20,19 @@ def setup():
     CoordinateSystem.scale_x = 100 / screen.get_width()
     CoordinateSystem.scale_y = 100 / screen.get_height()
 
-    font = pg.font.Font(os.path.join(main_dir, 'graphics/fonts/kongtext/kongtext.ttf'), 24)
-    new = NavButton(font, 'New Game', Coordinate(50, 45), Event(ScreenDirector.screen_event, active='new'))
+    font = pg.font.Font(os.path.join(
+        main_dir, 'graphics/fonts/kongtext/kongtext.ttf'), 24)
+    new = NavButton(font, 'New Game', Coordinate(50, 45),
+                    Event(Screen.screen_event, active='new'))
+    back = NavButton(font, 'Back', Coordinate(50, 45),
+                     Event(Screen.screen_event, active='main'))
     quit = QuitButton(font, Coordinate(50, 55))
     mainScreen = Screen('main', (new, quit), True)
-    newScreen = Screen('new', (quit,))
+    newScreen = Screen('new', (back, quit))
 
-    directors = ScreenDirector([mainScreen, newScreen]),
+    directors = ScreenDirector(
+        screens=[mainScreen, newScreen],
+    ),
 
     return directors
 

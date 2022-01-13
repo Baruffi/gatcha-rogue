@@ -5,7 +5,7 @@ from classes.base.Updatable import Updatable
 
 class Director():
 
-    def __init__(self, surface: pg.Surface = None, updatables: list[Updatable] = [], drawables: list[Drawable] = [], *event_types: int):
+    def __init__(self, *event_types: int, surface: pg.Surface = None, updatables: list[Updatable] = [], drawables: list[Drawable] = []):
         if event_types:
             self.get_config = {'eventtype': event_types}
         else:
@@ -30,16 +30,18 @@ class Director():
     def update(self):
         self.pre_update()
 
-        for e in pg.event.get(**self.get_config):
-            for updatable in self.updatables:
-                updatable.update(e)
+        if self.updatables and (events := pg.event.get(**self.get_config)):
+            for event in events:
+                for updatable in self.updatables:
+                    updatable.update(event)
 
-        self.post_update()
+            self.post_update()
 
     def draw(self):
         self.pre_draw()
 
-        for drawable in self.drawables:
-            drawable.draw(self.surface)
+        if self.drawables:
+            for drawable in self.drawables:
+                drawable.draw(self.surface)
 
-        self.post_draw()
+            self.post_draw()

@@ -30,5 +30,5 @@ class Drawable():
         self.surface = pg.transform.scale(
             self.surface, (value.width - CONTOUR, value.height - CONTOUR))
 
-    def draw(self, screen: pg.Surface):
-        screen.blit(self.surface, self.coordinate.real_position)
+    def draw(self, surface: pg.Surface):
+        surface.blit(self.surface, self.coordinate.real_position)

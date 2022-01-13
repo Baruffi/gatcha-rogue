@@ -11,12 +11,12 @@ class Hoverable(GameObject):
         self.accent_color = accent_color
         self.hovered = False
 
-    def update(self, e: pg.event.Event):
+    def update(self, event: pg.event.Event):
         mouse_x, mouse_y = pg.mouse.get_pos()
 
         self.hovered = self.rect.collidepoint(mouse_x, mouse_y)
 
-        super().update(e)
+        super().update(event)
 
     def draw(self, screen: pg.Surface):
         if self.hovered:
