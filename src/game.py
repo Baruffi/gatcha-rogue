@@ -28,11 +28,11 @@ def setup():
     back = NavButton(font, 'Back', Coordinate(50, 45),
                      Event(Screen.screen_event, active='main'))
     quit = QuitButton(font, Coordinate(50, 55))
-    mainScreen = Screen('main', (new, quit), True)
-    newScreen = Screen('new', (back, quit))
+    main_screen = Screen('main', (new, quit), True)
+    new_screen = Screen('new', (back, quit))
 
     directors = ScreenDirector(
-        screens=[mainScreen, newScreen],
+        screens=[main_screen, new_screen],
     ),
 
     return directors
