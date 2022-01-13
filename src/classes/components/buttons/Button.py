@@ -10,7 +10,7 @@ class Button(Hoverable):
         surface = font.render(button_label, False, (255, 255, 255), (0, 0, 0))
         surface.set_colorkey((0, 0, 0))
 
-        super().__init__(surface, coordinate.centerOn(
+        super().__init__(surface, coordinate.center_on(
             surface), accent_color, pg.MOUSEBUTTONDOWN)
 
     def click(self):

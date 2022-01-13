@@ -6,7 +6,7 @@ class CoordinateSystem():
     scale_y = 1
 
     @classmethod
-    def getGridCoords(cls, x: int = None, y: int = None):
+    def get_grid_coords(cls, x: int = None, y: int = None):
         if x and y:
             return x * cls.scale_x, y * cls.scale_y
         elif x:
@@ -15,20 +15,13 @@ class CoordinateSystem():
             return y * cls.scale_y
 
     @classmethod
-    def getRealCoords(cls, x: int = None, y: int = None):
+    def get_real_coords(cls, x: int = None, y: int = None):
         if x and y:
             return x // cls.scale_x, y // cls.scale_y
         elif x:
             return x // cls.scale_x
         elif y:
             return y // cls.scale_y
-
-    @classmethod
-    def centerOn(cls, x: int, y: int, surface: pg.Surface) -> tuple[int, int]:
-        half_width = cls.getGridCoords(x=surface.get_width() // 2)
-        half_height = cls.getGridCoords(y=surface.get_height() // 2)
-
-        return x - half_width, y - half_height
 
 
 class Coordinate():
@@ -60,31 +53,34 @@ class Coordinate():
 
     @property
     def real_x(self) -> int:
-        return CoordinateSystem.getRealCoords(x=self.x)
+        return CoordinateSystem.get_real_coords(x=self.x)
 
     @real_x.setter
     def real_x(self, value):
-        self.x: int = CoordinateSystem.getGridCoords(x=value)
+        self.x: int = CoordinateSystem.get_grid_coords(x=value)
 
     @property
     def real_y(self) -> int:
-        return CoordinateSystem.getRealCoords(y=self.y)
+        return CoordinateSystem.get_real_coords(y=self.y)
 
     @real_y.setter
     def real_y(self, value):
-        self.y: int = CoordinateSystem.getGridCoords(y=value)
+        self.y: int = CoordinateSystem.get_grid_coords(y=value)
 
     @property
     def real_position(self) -> tuple[int, int]:
-        return CoordinateSystem.getRealCoords(*self.position)
+        return CoordinateSystem.get_real_coords(*self.position)
 
     @real_position.setter
     def real_position(self, value):
-        self.position: tuple[int, int] = CoordinateSystem.getGridCoords(*value)
+        self.position: tuple[int,
+                             int] = CoordinateSystem.get_grid_coords(*value)
 
-    def centerOn(self, surface: pg.Surface):
-        half_width = CoordinateSystem.getGridCoords(x=surface.get_width() // 2)
-        half_height = CoordinateSystem.getGridCoords(y=surface.get_height() // 2)
+    def center_on(self, surface: pg.Surface):
+        half_width = CoordinateSystem.get_grid_coords(
+            x=surface.get_width() // 2)
+        half_height = CoordinateSystem.get_grid_coords(
+            y=surface.get_height() // 2)
 
         self.x = self.x - half_width
         self.y = self.y - half_height

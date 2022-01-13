@@ -2,6 +2,7 @@ import os
 
 import pygame as pg
 from pygame.event import Event
+from pygame.font import Font
 
 from classes.base.Coordinate import Coordinate, CoordinateSystem
 from classes.components.buttons.NavButton import NavButton
@@ -20,7 +21,7 @@ def setup():
     CoordinateSystem.scale_x = 100 / screen.get_width()
     CoordinateSystem.scale_y = 100 / screen.get_height()
 
-    font = pg.font.Font(os.path.join(
+    font = Font(os.path.join(
         main_dir, 'graphics/fonts/kongtext/kongtext.ttf'), 24)
     new = NavButton(font, 'New Game', Coordinate(50, 45),
                     Event(Screen.screen_event, active='new'))
